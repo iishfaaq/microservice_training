@@ -37,7 +37,7 @@ public class NotificationService {
 
                     Best Regards,
                     Spring Shop
-                    """, orderPlaceEvent.getOrderNumber()));
+                    """, orderPlaceEvent.getOrderNumber().toString()));
         };
 
         try {
