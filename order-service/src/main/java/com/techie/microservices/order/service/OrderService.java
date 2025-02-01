@@ -7,6 +7,7 @@ import com.techie.microservices.order.model.Order;
 import com.techie.microservices.order.repository.OrderRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.slf4j.MDC;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 
@@ -44,6 +45,8 @@ public class OrderService {
                 OrderPlaceEvent orderPlaceEvent = new OrderPlaceEvent(order.getOrderNumber(), orderRequest.userDetails().email());
                 log.info("Start - sending order placed event to kafka topic");
                 kafkaTemplate.send("order-placed-topic", orderPlaceEvent);
+                String traceId = MDC.get("traceId");
+                log.info("Received message: {}, traceId: {}", traceId);
                 log.info("End - sending order placed event to kafka topic");
 
             }

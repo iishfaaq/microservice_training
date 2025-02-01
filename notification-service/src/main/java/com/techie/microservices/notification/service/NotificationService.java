@@ -3,6 +3,7 @@ package com.techie.microservices.notification.service;
 import com.techie.microservices.order.event.OrderPlaceEvent;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.slf4j.MDC;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.mail.MailException;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -19,6 +20,9 @@ public class NotificationService {
 
     @KafkaListener(topics = "order-placed-topic")
     public void listen(OrderPlaceEvent orderPlaceEvent) {
+        String traceId = MDC.get("traceId");
+        log.info("Received message:, traceId: {}", traceId);
+
         log.info("Got message from order placed topic {}", orderPlaceEvent);
 
         MimeMessagePreparator messagePreparator = mimeMessage -> {

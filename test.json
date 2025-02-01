@@ -1,0 +1,70 @@
+{
+  "dashboard": {
+    "id": null,
+    "uid": "prometheus-dashboard",
+    "title": "Prometheus Metrics",
+    "tags": ["prometheus"],
+    "timezone": "browser",
+    "schemaVersion": 36,
+    "version": 1,
+    "panels": [
+      {
+        "id": 1,
+        "title": "CPU Usage",
+        "type": "graph",
+        "datasource": "Prometheus",
+        "targets": [
+          {
+            "expr": "100 - (avg by (instance) (rate(node_cpu_seconds_total{mode=\"idle\"}[5m])) * 100)",
+            "legendFormat": "{{instance}}",
+            "refId": "A"
+          }
+        ],
+        "gridPos": {
+          "x": 0,
+          "y": 0,
+          "w": 12,
+          "h": 8
+        },
+        "options": {
+          "lines": true,
+          "fill": 1,
+          "linewidth": 2,
+          "points": true,
+          "pointradius": 2,
+          "bars": false,
+          "stack": false
+        }
+      },
+      {
+        "id": 2,
+        "title": "Memory Usage",
+        "type": "gauge",
+        "datasource": "Prometheus",
+        "targets": [
+          {
+            "expr": "(node_memory_MemTotal_bytes - node_memory_MemAvailable_bytes) / node_memory_MemTotal_bytes * 100",
+            "legendFormat": "Memory Usage",
+            "refId": "B"
+          }
+        ],
+        "gridPos": {
+          "x": 12,
+          "y": 0,
+          "w": 12,
+          "h": 8
+        },
+        "options": {
+          "fieldOptions": {
+            "min": 0,
+            "max": 100,
+            "unit": "percent"
+          }
+        }
+      }
+    ]
+  },
+  "overwrite": true,
+  "inputs": [],
+  "folderId": 0
+}
